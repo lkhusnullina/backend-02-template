@@ -10,24 +10,24 @@ const server = http.createServer((request, response) => {
       .end(getUsers());
     return;
   }
-  if (url.pathname === "/hello") {
-    if (url.searchParams.has("name")) {
-      const name = url.searchParams.get("name");
-      response
-        .writeHead(200, "OK", { "Content-Type": "text/plain" })
-        .end(`hello ${name}`);
+  if (url.pathname === "/") {
+    if (url.searchParams.has("hello")) {
+      const name = url.searchParams.get("hello");
+      if (name) {
+        response
+          .writeHead(200, "OK", { "Content-Type": "text/plain" })
+          .end(`hello ${name}`);
+      } else {
+        response
+          .writeHead(400, "ERROR", { "Content-Type": "text/plain" })
+          .end(`Enter a name`);
+      }
     } else {
       response
-        .writeHead(400, "ERROR", { "Content-Type": "text/plain" })
-        .end(`Enter a name`);
+        .writeHead(200, "OK", { "Content-Type": "text/plain" })
+        .end("Hello world!");
+      return;
     }
-    return;
-  }
-  if (url.pathname === "/") {
-    response
-      .writeHead(200, "OK", { "Content-Type": "text/plain" })
-      .end("Hello world!");
-    return;
   }
 
   response.writeHead(500, "ERROR", { "Content-Type": "text/plain" }).end();
